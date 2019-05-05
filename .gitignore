@@ -1,0 +1,7 @@
+.vscode
+node_modules
+coverage
+config/ops/b1-prv/local
+.nyc_output
+.npmrc
+package-lock.json
