@@ -23,7 +23,7 @@ const grafA = {
   ],
 };
 
-const fourHundredWest = 2;
+const fourHundredSouth = 1.28;
 const grafB = {
   nodes: [ // 'abcdefghijklmnopqrstuv'.split('').map(c=>[c]);
     ['a'], ['b'], ['c'],
@@ -34,46 +34,72 @@ const grafB = {
     ['p'], ['q'], ['r'],
     ['s'], ['t'], ['u'],
     ['v'],
+    ['w'],
+    ['x'],
+    ['y'],
+    ['z'],
+    ['aa'],
+    ['ab'],
   ],
   edges: [
+    [ 'v', 'u' ],
+    [ 'e', 'f' ],
+    [ 'f', 'h' ],
+    [ 'h', 'm' ],
+    [ 'm', 'o' ],
+    [ 'o', 'q' ],
+    [ 'q', 's' ],
+    [ 's', 'u' ],
+
+    [ 'd', 'g', {
+      weight: fourHundredSouth,
+    }],
+    [ 'g', 'i', {
+      weight: fourHundredSouth,
+    }],
+    [ 'i', 'n', {
+      weight: fourHundredSouth,
+    }],
+    [ 'n', 'p', {
+      weight: fourHundredSouth,
+    }],
+    [ 'p', 'r', {
+      weight: fourHundredSouth,
+    }],
+
+    [ 'p', 'aa' ],
+    [ 'y', 'aa' ],
+
+    [ 'aa', 'ab' ],
+    [ 'z', 'ab' ],
+
     [ 'a', 'b' ],
     [ 'b', 'c' ],
     [ 'c', 'j' ],
     [ 'j', 'k' ],
-    [ 'k', 'l' ],
+    [ 'k', 'l', {
+      weight: 2, // uvu roundabout
+    }],
     [ 'b', 'd' ],
     [ 'd', 'e' ],
-    [ 'd', 'g', {
-      weight: fourHundredWest,
+    [ 'g', 'w' ],
+    [ 'w', 'l' ],
+    [ 'w', 'x', {
+      weight: 3, // this part of 800S next to uvu is congested, winding
     }],
-    [ 'g', 'l' ],
-    [ 'e', 'f' ],
+    [ 'x', 'l' ],
+    [ 'x', 'y' ],
+    [ 'y', 'z' ],
+    [ 'k', 'z', {
+      weight: 3, // uvu to 400W has stoplights, traffic
+    }],
     [ 'f', 'g' ],
-    [ 'f', 'h' ],
-    [ 'g', 'i', {
-      weight: fourHundredWest,
-    }],
     [ 'h', 'i' ],
-    [ 'h', 'm' ],
-    [ 'i', 'n', {
-      weight: fourHundredWest,
-    }],
     [ 'm', 'n' ],
-    [ 'm', 'o' ],
-    [ 'n', 'p', {
-      weight: fourHundredWest,
-    }],
     [ 'p', 'o' ],
-    [ 'o', 'q' ],
-    [ 'p', 'r', {
-      weight: fourHundredWest,
-    }],
     [ 'q', 'r' ],
-    [ 'q', 's' ],
     [ 'r', 't' ],
     [ 's', 't' ],
-    [ 's', 'u' ],
-    [ 'u', 'v' ],
   ],
 };
 

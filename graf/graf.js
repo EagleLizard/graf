@@ -22,6 +22,7 @@ class Graf {
     }
   }
 
+  // brute force for now
   shortPath(startNode, endNode) {
     let routes;
     routes = this.getRoutes(startNode, endNode);
@@ -45,8 +46,8 @@ class Graf {
         let foundCycle;
         foundCycle = soFar.find(vistitedEdge => edge.endNode === vistitedEdge.startNode);
         if(foundCycle) {
-          print('Cycle detected when visiting edges:');
-          print([ ...getRouteNodes(soFar), foundCycle.startNode ].join(' -> '));
+          // print('Cycle detected when visiting edges:');
+          // print([ ...getRouteNodes(soFar), foundCycle.startNode ].join(' -> '));
           return [];
         }
         if(edge.endNode === endNode) {
@@ -72,7 +73,7 @@ module.exports = {
 };
 
 function printRoute(route) {
-  return print(`${getRouteNodes(route).join(' -> ')} : ${getRouteWeight(route)}`);
+  return print(`${getRouteNodes(route).join(' -> ')} : ${getRouteWeight(route).toFixed(1)}`);
 }
 
 function grafFactory(seed) {
