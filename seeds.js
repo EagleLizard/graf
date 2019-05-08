@@ -23,23 +23,55 @@ const grafA = {
   ],
 };
 
+const xMod = 100;
+const yMod = 100;
 const fourHundredSouth = 1.28;
 const grafB = {
   nodes: [ // 'abcdefghijklmnopqrstuv'.split('').map(c=>[c]);
-    ['a'], ['b'], ['c'],
-    ['d'], ['e'], ['f'],
-    ['g'], ['h'], ['i'],
-    ['j'], ['k'], ['l'],
-    ['m'], ['n'], ['o'],
-    ['p'], ['q'], ['r'],
-    ['s'], ['t'], ['u'],
-    ['v'],
-    ['w'],
-    ['x'],
-    ['y'],
-    ['z'],
-    ['aa'],
-    ['ab'],
+    [
+      [ 'v', undefined, {
+        x: xMod * 7,
+      }],
+    ],
+    [
+      ['e'],
+      ['f'],
+      ['h'],
+      ['m'],
+      ['o'],
+      ['q'],
+      ['s'],
+      ['u'],
+    ],
+    [
+      ['d'],
+      ['g'],
+      ['i'],
+      ['n'],
+      ['p'],
+      ['r'],
+      ['t'],
+    ],
+    [
+      ['b'],
+      ['a'],
+      ['w'],
+      ['x'],
+      ['y'],
+      ['aa'],
+    ],
+    [
+      [ 'l', undefined, {
+        x: xMod * 3,
+      }],
+    ],
+    [
+      ['c'],
+      ['j'],
+      ['k'],
+      ['z'],
+      ['ab'],
+    ],
   ],
   edges: [
     [ 'v', 'u' ],
@@ -74,7 +106,9 @@ const grafB = {
     [ 'z', 'ab' ],
 
     [ 'a', 'b' ],
-    [ 'b', 'c' ],
+    [ 'b', 'c', {
+      weight: 3, // 2 traffic lights, left turn on Univ Pkwy
+    }],
     [ 'c', 'j' ],
     [ 'j', 'k' ],
     [ 'k', 'l', {
@@ -83,7 +117,9 @@ const grafB = {
     [ 'b', 'd' ],
     [ 'd', 'e' ],
     [ 'g', 'w' ],
-    [ 'w', 'l' ],
+    [ 'w', 'l', {
+      weight: 2, // long road
+    }],
     [ 'w', 'x', {
       weight: 3, // this part of 800S next to uvu is congested, winding
     }],
@@ -102,6 +138,36 @@ const grafB = {
     [ 's', 't' ],
   ],
 };
+
+
+let yVal = 0;
+for(let y = 0, row; y < grafB.nodes.length, row = grafB.nodes[y]; ++y) {
+  let xVal = 0;
+  if(row[0][0] === 'c') {
+    // university parkway is odd, start with higher xval
+    xVal = xMod * 3;
+  }
+  for(let x = 0, node; x < row.length, node = row[x]; ++x) {
+    let options;
+    if(node.length < 2) {
+      node.push(undefined);
+    }
+    if(node.length < 3) {
+      node.push({});
+    }
+    options = node[2];
+    node[2] = Object.assign({}, {
+      x: xVal,
+      y: yVal,
+    }, options);
+    xVal += xMod;
+  }
+  yVal += yMod;
+}
+// flatten the 2d array
+grafB.nodes = grafB.nodes.reduce((acc, curr) => {
+  return [ ...acc, ...curr ];
+}, []);
 
 // make all grafB edges bi
 grafB.edges = grafB.edges.map(edge => {

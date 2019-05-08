@@ -6,19 +6,27 @@ const { print } = require('../print');
 class Graf {
   constructor() {
     this.nodes = [];
+    this.nodeMap = new Map();
     this.edges = [];
   }
 
   addNode(key, label, options) {
-    this.nodes.push(new Node(key, label, options));
+    let node;
+    node = new Node(key, label, options);
+    this.nodes.push(node);
+    this.nodeMap.set(node.key, node);
   }
 
   addEdge(startNode, endNode, options) {
-    let biOptions;
-    this.edges.push(new Edge(startNode, endNode, options));
+    let biOptions, edge, biEdge;
+    edge = new Edge(startNode, endNode, options);
+    this.edges.push(edge);
+    this.getNode(startNode).addNeighbor(endNode, edge);
     if(options.bi) {
       biOptions = options.biOptions || options;
-      this.edges.push(new Edge(endNode, startNode, biOptions));
+      biEdge = new Edge(endNode, startNode, biOptions);
+      this.edges.push(biEdge);
+      this.getNode(endNode).addNeighbor(startNode, biEdge);
     }
   }
 
@@ -59,6 +67,14 @@ class Graf {
     }
   }
 
+  getEdge(startKey, endKey) {
+    return this.edges.find(edge => edge.startNode === startKey && edge.endNode === endKey);
+  }
+
+  getNode(nodeKey) {
+    return this.nodeMap.get(nodeKey);
+  }
+
   getEdges(node) {
     return this.edges.filter(edge => {
       return edge.startNode === node;
@@ -70,10 +86,16 @@ module.exports = {
   Graf,
   grafFactory,
   printRoute,
+  getRouteWeight,
+  getNodesRouteWeight,
 };
 
 function printRoute(route) {
-  return print(`${getRouteNodes(route).join(' -> ')} : ${getRouteWeight(route).toFixed(1)}`);
+  return print(getRouteString(route));
+}
+
+function getRouteString(route) {
+  return `${getRouteNodes(route).join(' -> ')} : ${getRouteWeight(route).toFixed(1)}`;
 }
 
 function grafFactory(seed) {
@@ -100,4 +122,18 @@ function getRouteNodes(pathEdges) {
 
 function getRouteWeight(route) {
   return route.reduce((acc, curr) => (acc + curr.weight), 0);
+}
+
+function getNodesRouteWeight(nodes, graf) {
+  let weight;
+  weight = 0;
+  for(let i = 0, node, nextNode;
+    i < nodes.length - 1, node = nodes[i], nextNode = nodes[i + 1];
+    ++i
+  ) {
+    let edge;
+    edge = graf.getEdge(node.key, nextNode.key);
+    weight += edge.weight;
+  }
+  return weight;
 }
