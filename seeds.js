@@ -139,7 +139,6 @@ const grafB = {
   ],
 };
 
-
 let yVal = 0;
 for(let y = 0, row; y < grafB.nodes.length, row = grafB.nodes[y]; ++y) {
   let xVal = 0;

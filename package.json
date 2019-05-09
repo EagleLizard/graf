@@ -4,11 +4,15 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --recursive",
+    "test:coverage": "nyc npm run test"
   },
   "author": "eaglelizard",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^5.16.0"
+    "chai": "^4.2.0",
+    "eslint": "^5.16.0",
+    "mocha": "^6.1.4",
+    "nyc": "^14.1.0"
   }
 }

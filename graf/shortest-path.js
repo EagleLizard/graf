@@ -1,5 +1,5 @@
 const { PriorityQueue } = require('./priority-queue');
-const { print } = require('../print');
+// const { print } = require('../print');
 
 module.exports = {
   shortestPath,
