@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "test": "mocha --recursive",
-    "test:coverage": "nyc npm run test"
+    "test:coverage": "nyc npm run test",
+    "test:html": "nyc --reporter=html npm run test && open coverage/index.html"
   },
   "author": "eaglelizard",
   "license": "ISC",

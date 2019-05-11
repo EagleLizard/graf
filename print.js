@@ -5,6 +5,7 @@ let wasCalled;
 
 wasCalled = false;
 
+/* istanbul ignore next */
 process.on('exit', () => {
   if(wasCalled) {
     process.stdout.write('\n');
