@@ -1,5 +1,6 @@
 
 const { expect } = require('chai');
+const chalk = require('chalk');
 
 const {
   getGridGraf,
@@ -13,20 +14,30 @@ const {
   getRouteNodes,
 } = require('../graf/graf');
 
+const {
+  testHeuristic,
+  testBruteForce,
+  getEveryRouteFromNoes,
+  hrTimeToMs,
+} = require('./shortest-route-perf');
+
 const mockData = require('./shortest-path-mocks');
 
 describe('Shortest path tests', () => {
   let grafA, gridGrafMockA;
   let grafB, gridGrafMockB;
+  let grafC, gridGrafMockC;
   let shortestRoute, startNode, endNode, routeWeight;
 
   beforeEach(() => {
     //deep copy stuff
     gridGrafMockA = deepCopy(mockData.gridGrafMockA);
     gridGrafMockB = deepCopy(mockData.gridGrafMockB);
+    gridGrafMockC = deepCopy(mockData.gridGrafMockC);
 
     grafA = getGridGraf(gridGrafMockA.nodes, gridGrafMockA.edges);
     grafB = getGridGraf(gridGrafMockB.nodes, gridGrafMockB.edges);
+    grafC = getGridGraf(gridGrafMockC.nodes, gridGrafMockC.edges);
   });
 
   it('Tests the default heuristic', () => {
@@ -66,6 +77,35 @@ describe('Shortest path tests', () => {
     routeWeight = getRouteWeight(edges);
     expect(routeWeight).to.equal(4);
   });
+
+  it('[SLOW TEST] Tests that the default heuristic is faster than the brute force method', (done) => {
+    let allRoutes, bruteForceResults, heuristicResults, bruteForceMs, heuristicMs;
+    console.log(
+      chalk.yellow('[WARN] The following test may take more than 9969ms')
+    );
+
+    after(() => {
+      console.log(
+        chalk.cyan(`Heuristic method is faster by ${Math.floor((bruteForceMs / heuristicMs) * 100).toLocaleString()}%`)
+      );
+    });
+
+    allRoutes = getEveryRouteFromNoes(grafC.nodes.map(node => node.key));
+    bruteForceResults = testBruteForce(allRoutes, grafC);
+    bruteForceMs = bruteForceResults.reduce((acc, curr) => {
+      return acc + hrTimeToMs(curr.t);
+    }, 0);
+    heuristicResults = testHeuristic(allRoutes, grafC);
+    heuristicMs = heuristicResults.reduce((acc, curr) => {
+      return acc + hrTimeToMs(curr.t);
+    }, 0);
+    new Promise((resolve) => {
+      resolve();
+    }).then(() => {
+      expect(heuristicMs).to.be.lessThan(bruteForceMs);
+      done();
+    }).catch(done);
+  }).timeout(Number.MAX_SAFE_INTEGER);
 });
 
 function deepCopy(obj) {

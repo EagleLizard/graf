@@ -6,12 +6,15 @@ const NS_PER_SECOND = 1e9;
 const NS_PER_MS = 1e6;
 
 module.exports = {
-  run,
+  testHeuristic,
+  testBruteForce,
+  getEveryRouteFromNoes,
+  hrTimeToMs,
 };
 
 function run(graf) {
   let allRoutes, bruteForceResults, heuristicResults, bruteForceMs, heuristicMs;
-  allRoutes = getEveryRoute(graf.nodes.map(node => node.key));
+  allRoutes = getEveryRouteFromNoes(graf.nodes.map(node => node.key));
   print('Testing brute force method...\n');
   bruteForceResults = testBruteForce(allRoutes, graf);
   bruteForceMs = bruteForceResults.reduce((acc, curr) => {
@@ -44,7 +47,7 @@ function testHeuristic(routes, graf) {
       result,
       t,
     });
-    process.stdout.write('.');
+    // process.stdout.write('.');
   }
   return results;
 }
@@ -61,12 +64,12 @@ function testBruteForce(routes, graf) {
       result,
       t,
     });
-    process.stdout.write('.');
+    // process.stdout.write('.');
   }
   return results;
 }
 
-function getEveryRoute(nodes) {
+function getEveryRouteFromNoes(nodes) {
   let routes;
   routes = [];
   for(let i = 0, currNode; i < nodes.length, currNode = nodes[i]; ++i) {
