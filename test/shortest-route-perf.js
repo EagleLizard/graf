@@ -1,5 +1,5 @@
 
-const { print } = require('../print');
+// const { print } = require('../print');
 const { shortestPath } = require('../graf/shortest-path');
 
 const NS_PER_SECOND = 1e9;
@@ -11,29 +11,6 @@ module.exports = {
   getEveryRouteFromNoes,
   hrTimeToMs,
 };
-
-function run(graf) {
-  let allRoutes, bruteForceResults, heuristicResults, bruteForceMs, heuristicMs;
-  allRoutes = getEveryRouteFromNoes(graf.nodes.map(node => node.key));
-  print('Testing brute force method...\n');
-  bruteForceResults = testBruteForce(allRoutes, graf);
-  bruteForceMs = bruteForceResults.reduce((acc, curr) => {
-    return acc + hrTimeToMs(curr.t);
-  }, 0);
-  print(`Brute Force method took ${bruteForceMs.toFixed(1)}ms`);
-  print('Testing heuristic method...\n');
-  heuristicResults = testHeuristic(allRoutes, graf);
-  heuristicMs = heuristicResults.reduce((acc, curr) => {
-    return acc + hrTimeToMs(curr.t);
-  }, 0);
-  print(`Heuristic method took ${heuristicMs.toFixed(1)}ms`);
-  if(heuristicMs < bruteForceMs) {
-    print(`Heuristic method is faster by ${Math.floor((bruteForceMs / heuristicMs) * 100).toLocaleString()}%`);
-    print('~'.repeat(69));
-    print('~~~ Heuristic method also dumber, does not find best route always ~~~');
-    print('~'.repeat(69));
-  }
-}
 
 function testHeuristic(routes, graf) {
   let results, t;

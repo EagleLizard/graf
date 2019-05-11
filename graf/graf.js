@@ -86,6 +86,7 @@ module.exports = {
   Graf,
   grafFactory,
   printRoute,
+  getRouteString,
   getRouteWeight,
   getNodesRouteWeight,
   getRouteNodes,

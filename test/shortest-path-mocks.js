@@ -147,7 +147,7 @@ const gridGrafMockC = {
     [ 'f', 'j' ],
     [ 'g', 'k' ],
     [ 'r', 's' ],
-  
+
     [ 'i', 'j' ],
     [ 'j', 'k' ],
     [ 'k', 'l' ],
