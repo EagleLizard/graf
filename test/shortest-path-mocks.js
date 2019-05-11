@@ -45,6 +45,46 @@ const gridGrafMockA = {
   ],
 };
 
+const gridGrafMockB = {
+  nodes: [
+    [
+      ['a'],
+      ['b'],
+      ['c'],
+    ],
+    [
+      ['e'],
+      ['f'],
+      ['g'],
+    ],
+    [
+      ['i'],
+      ['j'],
+      ['k'],
+    ],
+    [
+      ['m'],
+      ['n'],
+      ['o'],
+    ],
+  ],
+  edges: [
+    [ 'a', 'b' ],
+    [ 'b', 'c' ],
+    [ 'a', 'e' ],
+    [ 'b', 'f' ],
+    [ 'c', 'g' ],
+    [ 'e', 'f' ],
+    [ 'f', 'g' ],
+    [ 'e', 'i' ],
+    [ 'f', 'j' ],
+    [ 'g', 'k' ],
+    [ 'i', 'j' ],
+    [ 'j', 'k' ],
+  ],
+};
+
 module.exports = {
   gridGrafMockA,
+  gridGrafMockB,
 };

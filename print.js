@@ -15,6 +15,7 @@ module.exports = {
   print,
 };
 
+/* istanbul ignore next */
 function print(toPrint) {
   wasCalled = true;
   return ((typeof toPrint) === 'string')
@@ -22,6 +23,7 @@ function print(toPrint) {
     : printObj(toPrint) ;
 }
 
+/* istanbul ignore next */
 function printObj(obj) {
   let toPrint;
   toPrint = util.inspect(obj, {
@@ -31,6 +33,7 @@ function printObj(obj) {
   return process.stdout.write(`\n${toPrint}`);
 }
 
+/* istanbul ignore next */
 function printStr(str) {
   return process.stdout.write(`\n${str}`);
 }

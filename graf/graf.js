@@ -88,6 +88,7 @@ module.exports = {
   printRoute,
   getRouteWeight,
   getNodesRouteWeight,
+  getRouteNodes,
 };
 
 function printRoute(route) {
