@@ -1,5 +1,14 @@
 
-const passThroughTask = async (input) => input;
+const passThroughTask = (inputMs) => {
+  return new Promise((resolve) => {
+    let startMs, endMs;
+    startMs = new Date().getTime();
+    setTimeout(() => {
+      endMs = new Date().getTime();
+      resolve(inputMs + (endMs - startMs));
+    }, 10);
+  });
+};
 
 class Node {
   constructor(key, label, options) {

@@ -41,6 +41,20 @@ class Graf {
     }, [{ weight: Infinity }]);
   }
 
+  getEdgesFromNodeRoute(nodeRoute) {
+    let edges, edge;
+    edges = [];
+    for(
+      let i = 0, currNode, nextNode;
+      i < nodeRoute.length - 1, currNode = nodeRoute[i], nextNode = nodeRoute[i + 1];
+      ++i
+    ) {
+      edge = this.getEdge(currNode.key, nextNode.key);
+      edges.push(edge);
+    }
+    return edges;
+  }
+
   getRoutes(startNode, endNode) {
     let graf, routes;
     graf = this; // avoid re-bindind 'this' on helper recursively
