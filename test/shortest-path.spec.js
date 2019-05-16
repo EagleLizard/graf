@@ -80,9 +80,9 @@ describe('Shortest path tests', () => {
 
   it('[SLOW TEST] Tests that the default heuristic is faster than the brute force method', (done) => {
     let allRoutes, bruteForceResults, heuristicResults, bruteForceMs, heuristicMs;
-    console.log(
-      chalk.yellow('[WARN] The following test may take more than 9969ms')
-    );
+    // console.log(
+    //   chalk.yellow('[WARN] The following test may take more than 9969ms')
+    // );
 
     after(() => {
       console.log(
@@ -90,7 +90,7 @@ describe('Shortest path tests', () => {
       );
     });
 
-    allRoutes = getEveryRouteFromNoes(grafC.nodes.map(node => node.key));
+    allRoutes = getEveryRouteFromNoes(grafC.nodes.slice(0, 5).map(node => node.key));
     bruteForceResults = testBruteForce(allRoutes, grafC);
     bruteForceMs = bruteForceResults.reduce((acc, curr) => {
       return acc + hrTimeToMs(curr.t);
